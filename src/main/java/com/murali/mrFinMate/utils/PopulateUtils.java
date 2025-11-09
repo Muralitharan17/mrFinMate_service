@@ -7,9 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.murali.mrFinMate.dto.BudgetConfigDTO;
 import com.murali.mrFinMate.dto.BudgetSectionDTO;
+import com.murali.mrFinMate.dto.FinanceCategoryDTO;
+import com.murali.mrFinMate.dto.FinanceDetailDTO;
+import com.murali.mrFinMate.dto.FinanceTypeDTO;
 import com.murali.mrFinMate.dto.ProfileDTO;
 import com.murali.mrFinMate.entity.BudgetConfig;
 import com.murali.mrFinMate.entity.BudgetSection;
+import com.murali.mrFinMate.entity.FinanceCategory;
+import com.murali.mrFinMate.entity.FinanceDetail;
+import com.murali.mrFinMate.entity.FinanceType;
 import com.murali.mrFinMate.entity.Profile;
 
 @Service
@@ -136,6 +142,58 @@ public class PopulateUtils {
 		}
 		
 		return budgetSection;
+	}
+
+	public FinanceTypeDTO populateFinanceTypeDTOFromFinanceTypeEntity(FinanceType financeType) {
+		FinanceTypeDTO financeTypeDTO = null;
+		try {
+			if(financeType != null) {
+				financeTypeDTO = new FinanceTypeDTO();
+
+				financeTypeDTO.setId(financeType.getId());
+				financeTypeDTO.setSectionId(financeType.getBudgetSection().getId());
+				financeTypeDTO.setName(financeType.getTypeName());
+				financeTypeDTO.setPercentage(financeType.getTypePercentage());
+				financeTypeDTO.setAllottedAmount(financeType.getAllottedAmount());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return financeTypeDTO;
+	}
+
+	public FinanceCategoryDTO populateFinanceCategoryDTOFromFinanceCategoryEntity(FinanceCategory cat) {
+		FinanceCategoryDTO financeCategoryDTO = null;
+		try {
+			if (cat != null) {
+				financeCategoryDTO = new FinanceCategoryDTO();
+
+				financeCategoryDTO.setId(cat.getId());
+				financeCategoryDTO.setName(cat.getCategoryName());
+				financeCategoryDTO.setPercentage(cat.getCategoryPercentage());
+				financeCategoryDTO.setAllottedAmount(cat.getAllottedAmount());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return financeCategoryDTO;
+	}
+
+	public FinanceDetailDTO populateFinanceDetailDTOFromFinanceDetailEntity(FinanceDetail det) {
+		FinanceDetailDTO financeDetailDTO = null;
+		try {
+			if (det != null) {
+				financeDetailDTO = new FinanceDetailDTO();
+
+				financeDetailDTO.setId(det.getId());
+				financeDetailDTO.setName(det.getDetailName());
+				financeDetailDTO.setPercentage(det.getDetailPercentage());
+				financeDetailDTO.setAllottedAmount(det.getAllottedAmount());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return financeDetailDTO;
 	}
 	
 }

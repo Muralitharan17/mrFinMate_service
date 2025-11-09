@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,6 +26,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(
@@ -43,6 +47,8 @@ public class BudgetConfig {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PROFILE_ID", nullable = false)
+    @JsonBackReference // avoids recursion with Profile
+    @ToString.Exclude
     private Profile profile;
 
     @Column(name = "MONTH", nullable = false)
@@ -76,6 +82,8 @@ public class BudgetConfig {
     private LocalDateTime updatedDate;
 
     @OneToMany(mappedBy = "budgetConfig", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @ToString.Exclude
     private List<BudgetSection> sections;
 
     @PrePersist

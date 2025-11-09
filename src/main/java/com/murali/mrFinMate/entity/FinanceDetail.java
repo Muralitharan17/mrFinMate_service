@@ -17,38 +17,45 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Table(name = "budget_section")
-@Getter
-@Setter
+@Table(name = "finance_detail")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class BudgetSection {
+@Data
+public class FinanceDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SECTION_ID")
+    @Column(name = "FINANCE_DETAIL_ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BUDGET_CONFIG_ID")
-    @JsonBackReference // avoids recursion with BudgetConfig
-    private BudgetConfig budgetConfig;
+    @JoinColumn(name = "FINANCE_CATEGORY_ID", nullable = false)
+    @ToString.Exclude
+    @JsonBackReference // avoids recursion with FinanceCategory
+    private FinanceCategory financeCategory;
 
-    @Column(name = "SECTION_NAME", nullable = false)
-    private String sectionName;
+    @Column(name = "FINANCE_DETAIL_NAME", nullable = false)
+    private String detailName;
 
-    @Column(name = "SECTION_PERCENTAGE", precision = 5, scale = 2)
-    private BigDecimal sectionPercentage;
+    @Column(name = "PERCENTAGE", precision = 5, scale = 2)
+    private BigDecimal detailPercentage;
 
     @Column(name = "ALLOTTED_AMOUNT", precision = 12, scale = 2)
     private BigDecimal allottedAmount;
+    
+    @Column(name = "SPENT_AMOUNT", precision = 12, scale = 2)
+    private BigDecimal spentAmount;
+
+    @Column(name = "BALANCE_AMOUNT", precision = 12, scale = 2, insertable = false, updatable = false)
+    private BigDecimal balanceAmount;
+    
+    @Column(name = "REMARKS", length = 255)
+    private String remarks;
 
     @Column(name = "CREATED_USER")
     private String createdUser;
@@ -76,4 +83,3 @@ public class BudgetSection {
         updatedDate = LocalDateTime.now();
     }
 }
-
