@@ -59,6 +59,12 @@ public class BudgetConfig {
 
     @Column(name = "ACTUAL_SALARY", precision = 12, scale = 2)
     private BigDecimal actualSalary;
+    
+    @Column(name = "SPENT_SALARY", precision = 12, scale = 2)
+    private BigDecimal spentSalary = BigDecimal.ZERO;
+    
+    @Column(name = "BALANCE_SALARY", precision = 12, scale = 2)
+    private BigDecimal balanceSalary = BigDecimal.ZERO;
 
     @Column(name = "BUDGET_PERCENTAGE", precision = 5, scale = 2)
     private BigDecimal budgetPercentage;

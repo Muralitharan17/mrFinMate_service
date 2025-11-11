@@ -11,5 +11,7 @@ public class FinanceCategoryDTO {
     private String name;
     private BigDecimal percentage;
     private BigDecimal allottedAmount;
+    private BigDecimal spentAmount;
+    private BigDecimal balanceAmount;
     private List<FinanceDetailDTO> details;
 }

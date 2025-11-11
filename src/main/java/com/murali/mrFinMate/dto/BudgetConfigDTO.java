@@ -21,6 +21,8 @@ public class BudgetConfigDTO {
     private String month;
     private String year;
     private BigDecimal actualSalary;
+    private BigDecimal spentSalary;
+    private BigDecimal balanceSalary;
     private BigDecimal budgetPercentage;
     private BigDecimal budgetSalary;
     private String createdUser;

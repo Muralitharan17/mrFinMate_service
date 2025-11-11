@@ -51,6 +51,8 @@ public class PopulateUtils {
 				budgetSectionDTO.setName(budgetSection.getSectionName());
 				budgetSectionDTO.setPercentage(budgetSection.getSectionPercentage());
 				budgetSectionDTO.setAllocatedAmount(budgetSection.getAllottedAmount());
+				budgetSectionDTO.setSpentAmount(budgetSection.getSpentAmount());
+				budgetSectionDTO.setBalanceAmount(budgetSection.getBalanceAmount());
 			}
 			
 		} catch (Exception e) {
@@ -101,6 +103,8 @@ public class PopulateUtils {
 				budgetConfigDTO.setActualSalary(budgetConfig.getActualSalary());
 				budgetConfigDTO.setBudgetPercentage(budgetConfig.getBudgetPercentage());
 				budgetConfigDTO.setBudgetSalary(budgetConfig.getBudgetSalary());
+				budgetConfigDTO.setSpentSalary(budgetConfig.getSpentSalary());
+				budgetConfigDTO.setBalanceSalary(budgetConfig.getBalanceSalary());
 				
 				if (budgetConfig.getSections() != null && !budgetConfig.getSections().isEmpty()) {
 					budgetSectionDTOList = budgetConfig.getSections().stream().map(entity -> {
@@ -155,6 +159,9 @@ public class PopulateUtils {
 				financeTypeDTO.setName(financeType.getTypeName());
 				financeTypeDTO.setPercentage(financeType.getTypePercentage());
 				financeTypeDTO.setAllottedAmount(financeType.getAllottedAmount());
+				financeTypeDTO.setSpentAmount(financeType.getSpentAmount());
+				financeTypeDTO.setBalanceAmount(financeType.getBalanceAmount());
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,6 +179,8 @@ public class PopulateUtils {
 				financeCategoryDTO.setName(cat.getCategoryName());
 				financeCategoryDTO.setPercentage(cat.getCategoryPercentage());
 				financeCategoryDTO.setAllottedAmount(cat.getAllottedAmount());
+				financeCategoryDTO.setSpentAmount(cat.getSpentAmount());
+				financeCategoryDTO.setBalanceAmount(cat.getBalanceAmount());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -189,6 +198,8 @@ public class PopulateUtils {
 				financeDetailDTO.setName(det.getDetailName());
 				financeDetailDTO.setPercentage(det.getDetailPercentage());
 				financeDetailDTO.setAllottedAmount(det.getAllottedAmount());
+				financeDetailDTO.setSpentAmount(det.getSpentAmount());
+				financeDetailDTO.setBalanceAmount(det.getBalanceAmount());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

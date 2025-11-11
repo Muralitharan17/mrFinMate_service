@@ -18,5 +18,7 @@ public class BudgetSectionDTO {
     private String name;
     private BigDecimal percentage;
     private BigDecimal allocatedAmount;
+    private BigDecimal spentAmount;
+    private BigDecimal balanceAmount;
 }
 

@@ -49,6 +49,12 @@ public class BudgetSection {
 
     @Column(name = "ALLOTTED_AMOUNT", precision = 12, scale = 2)
     private BigDecimal allottedAmount;
+    
+    @Column(name = "SPENT_AMOUNT", precision = 12, scale = 2)
+    private BigDecimal spentAmount = BigDecimal.ZERO;
+    
+    @Column(name = "BALANCE_AMOUNT", precision = 12, scale = 2)
+    private BigDecimal balanceAmount = BigDecimal.ZERO;
 
     @Column(name = "CREATED_USER")
     private String createdUser;

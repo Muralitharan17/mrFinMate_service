@@ -109,4 +109,8 @@ public class BudgetConfigRepositoryService {
         return budgetConfigRepository.save(config);
     }
 
+	public void save(BudgetConfig config) {
+		budgetConfigRepository.save(config);
+	}
+
 }

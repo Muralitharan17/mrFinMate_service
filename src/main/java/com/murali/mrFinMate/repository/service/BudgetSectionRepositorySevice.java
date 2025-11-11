@@ -22,4 +22,9 @@ public class BudgetSectionRepositorySevice {
                 .orElseThrow(() -> new RuntimeException("Section not found"));
 	}
 
+	public void save(BudgetSection section) {
+		budgetSectionRepository.save(section);
+		
+	}
+
 }

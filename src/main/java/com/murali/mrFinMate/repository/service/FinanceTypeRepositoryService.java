@@ -1,6 +1,7 @@
 package com.murali.mrFinMate.repository.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,11 @@ public class FinanceTypeRepositoryService {
 
 	public void save(FinanceType financeType) {
 		financeTypeRepository.save(financeType);
+	}
+
+	public Optional<FinanceType> findByBudgetConfig_IdAndSectionIdAndFinanceTypeName(Long id, Long id2,
+			String financeType) {
+		return financeTypeRepository.findByBudgetConfig_IdAndBudgetSection_IdAndTypeName(id, id2, financeType);
 	}
 	
 	

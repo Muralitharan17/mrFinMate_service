@@ -10,5 +10,7 @@ public class FinanceDetailDTO {
     private String name;
     private BigDecimal percentage;
     private BigDecimal allottedAmount;
+    private BigDecimal spentAmount;
+    private BigDecimal balanceAmount;
 }
 
