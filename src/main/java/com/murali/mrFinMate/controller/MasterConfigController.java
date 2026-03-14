@@ -50,4 +50,14 @@ public class MasterConfigController {
 
         return masterConfigControllerService.getConfigValue(profileId, month, year, configName);
     }
+    
+    @GetMapping("/allValues")
+    public String getConfigAllValues(
+            @RequestParam Long profileId,
+            @RequestParam(required = false) String month,
+            @RequestParam(required = false) String year,
+            @RequestParam String configName) {
+
+        return masterConfigControllerService.getConfigAllValues(profileId, month, year, configName);
+    }
 }

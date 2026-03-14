@@ -102,6 +102,9 @@ public class BudgetConfigRepositoryService {
                 .filter(section -> section.getId() != null && updatedSections.stream()
                         .noneMatch(u -> section.getId().equals(u.getId())));
 
+		if (config.getSections() == null) {
+			config.setSections(new ArrayList<>());
+		}
         config.getSections().clear();
         config.getSections().addAll(updatedSections);
         
@@ -109,8 +112,26 @@ public class BudgetConfigRepositoryService {
         return budgetConfigRepository.save(config);
     }
 
-	public void save(BudgetConfig config) {
-		budgetConfigRepository.save(config);
+	public BudgetConfig save(BudgetConfig budgetConfig) {
+		return budgetConfigRepository.save(budgetConfig);
+	}
+
+	public BudgetConfig findById(Long id) {
+		Optional<BudgetConfig> optional = budgetConfigRepository.findById(id);
+		return optional.orElse(null);
+	}
+
+	public BudgetConfigDTO fetchAllBudgetForProfile(Long profileId) {
+		BudgetConfigDTO BudgetConfig =  budgetConfigRepository.sumAllBudgetForProfile(profileId);
+		return BudgetConfig;
+	}
+
+	public BudgetConfigDTO fetchBudgetForYear(Long profileId, String year) {
+		return budgetConfigRepository.sumBudgetForYear(profileId, year);
+	}
+
+	public BudgetConfigDTO fetchBudgetForMonthAcrossYears(Long profileId, String month) {
+		return budgetConfigRepository.sumBudgetForMonthAcrossYears(profileId, month);
 	}
 
 }

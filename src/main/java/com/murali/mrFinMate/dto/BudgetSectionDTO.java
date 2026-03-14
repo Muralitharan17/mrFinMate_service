@@ -20,5 +20,17 @@ public class BudgetSectionDTO {
     private BigDecimal allocatedAmount;
     private BigDecimal spentAmount;
     private BigDecimal balanceAmount;
+    
+    public BudgetSectionDTO(String name, BigDecimal percentage, BigDecimal allocatedAmount, BigDecimal spentAmount,
+			BigDecimal balanceAmount) {
+    	this.id = System.nanoTime();
+		this.name = name;
+		this.percentage = percentage;
+		this.allocatedAmount = allocatedAmount;
+		this.spentAmount = spentAmount;
+		this.balanceAmount = balanceAmount;
+	}
+    
+    
 }
 

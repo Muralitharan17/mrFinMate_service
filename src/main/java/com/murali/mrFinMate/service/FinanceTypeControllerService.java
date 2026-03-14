@@ -1,6 +1,8 @@
 package com.murali.mrFinMate.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -8,6 +10,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.murali.mrFinMate.constants.CommonConstants;
+import com.murali.mrFinMate.dto.BudgetConfigDTO;
+import com.murali.mrFinMate.dto.BudgetSectionDTO;
 import com.murali.mrFinMate.dto.FinanceCategoryDTO;
 import com.murali.mrFinMate.dto.FinanceDetailDTO;
 import com.murali.mrFinMate.dto.FinanceRequest;
@@ -169,11 +174,131 @@ public class FinanceTypeControllerService {
 	                    .forEach(financeTypeRepositoryService::delete);
 				}
 				
+			} else if(financeRequest != null && financeRequest.getFinanceTypes() != null && financeRequest.getFinanceTypes().isEmpty()) {
+				// If no finance types in request, delete all existing
+				for (FinanceType existingType : existingTypes) {
+					financeTypeRepositoryService.delete(existingType);
+				}
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<FinanceTypeDTO> getFinanceTypeDetailsByGivenMonthAndYear(String sectionName, Long profileId, String month, String year) {
+		
+		// ALL case — no month filter & no year filter
+		if (month.equals(CommonConstants.ALL) && year.equals(CommonConstants.ALL)) {
+			System.out.println("Fetching all finance configs for profileId: " + profileId);
+
+			List<FinanceTypeDTO> typeAgg = financeTypeRepositoryService.aggregateTypesBasedOnProfileId(profileId, sectionName);
+			List<FinanceCategoryDTO> catAgg = financeCategoryRepositoryService
+					.aggregateTypesBasedOnProfileId(profileId, sectionName);
+			List<FinanceDetailDTO> detAgg = financeDetailRepositoryService.aggregateTypesBasedOnProfileId(profileId, sectionName);
+
+			Map<String, FinanceTypeDTO> typeMap = new LinkedHashMap<>();
+
+			for (FinanceTypeDTO t : typeAgg) {
+				t.setCategories(new ArrayList<>());
+				typeMap.put(t.getName(), t);
+			}
+
+			Map<String, FinanceCategoryDTO> categoryMap = new HashMap<>();
+			for (FinanceCategoryDTO c : catAgg) {
+
+				FinanceTypeDTO parent = typeMap.get(c.getTypeName());
+				c.setDetails(new ArrayList<>());
+				parent.getCategories().add(c);
+
+				categoryMap.put(c.getTypeName() + "::" + c.getName(), c);
+			}
+
+			for (FinanceDetailDTO d : detAgg) {
+
+				FinanceCategoryDTO parentCat = categoryMap.get(d.getTypeName() + "::" + d.getCategoryName());
+
+				parentCat.getDetails().add(d);
+			}
+
+			return new ArrayList<>(typeMap.values());
+		}
+
+	    // ALL MONTHS of a year
+	    if (month.equals(CommonConstants.ALL)) {
+
+			List<FinanceTypeDTO> typeAgg = financeTypeRepositoryService.aggregateTypesBasedOnYear(year, sectionName);
+			List<FinanceCategoryDTO> catAgg = financeCategoryRepositoryService
+					.aggregateTypesBasedOnYear(year, sectionName);
+			List<FinanceDetailDTO> detAgg = financeDetailRepositoryService.aggregateTypesBasedOnYear(year, sectionName);
+
+			Map<String, FinanceTypeDTO> typeMap = new LinkedHashMap<>();
+
+			for (FinanceTypeDTO t : typeAgg) {
+				t.setCategories(new ArrayList<>());
+				typeMap.put(t.getName(), t);
+			}
+
+			Map<String, FinanceCategoryDTO> categoryMap = new HashMap<>();
+			for (FinanceCategoryDTO c : catAgg) {
+
+				FinanceTypeDTO parent = typeMap.get(c.getTypeName());
+				c.setDetails(new ArrayList<>());
+				parent.getCategories().add(c);
+
+				categoryMap.put(c.getTypeName() + "::" + c.getName(), c);
+			}
+
+			for (FinanceDetailDTO d : detAgg) {
+
+				FinanceCategoryDTO parentCat = categoryMap.get(d.getTypeName() + "::" + d.getCategoryName());
+
+				parentCat.getDetails().add(d);
+			}
+
+			return new ArrayList<>(typeMap.values());
+		
+	    }
+
+	    // ALL YEARS for a month
+	    if (year.equals(CommonConstants.ALL)) {
+
+
+			List<FinanceTypeDTO> typeAgg = financeTypeRepositoryService.aggregateTypesBasedOnMonth(month, sectionName);
+			List<FinanceCategoryDTO> catAgg = financeCategoryRepositoryService
+					.aggregateTypesBasedOnMonth(month, sectionName);
+			List<FinanceDetailDTO> detAgg = financeDetailRepositoryService.aggregateTypesBasedOnMonth(month, sectionName);
+
+			Map<String, FinanceTypeDTO> typeMap = new LinkedHashMap<>();
+
+			for (FinanceTypeDTO t : typeAgg) {
+				t.setCategories(new ArrayList<>());
+				typeMap.put(t.getName(), t);
+			}
+
+			Map<String, FinanceCategoryDTO> categoryMap = new HashMap<>();
+			for (FinanceCategoryDTO c : catAgg) {
+
+				FinanceTypeDTO parent = typeMap.get(c.getTypeName());
+				c.setDetails(new ArrayList<>());
+				parent.getCategories().add(c);
+
+				categoryMap.put(c.getTypeName() + "::" + c.getName(), c);
+			}
+
+			for (FinanceDetailDTO d : detAgg) {
+
+				FinanceCategoryDTO parentCat = categoryMap.get(d.getTypeName() + "::" + d.getCategoryName());
+
+				parentCat.getDetails().add(d);
+			}
+
+			return new ArrayList<>(typeMap.values());
+		
+	    
+	    }
+	    
+	    return null;
 	}
 
 

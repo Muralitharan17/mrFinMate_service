@@ -20,9 +20,18 @@ public class ProfileRepositoryService {
         return profileRepository.findAll();
     }
     
+    public List<Profile> getAllActiveProfiles() {
+        return profileRepository.findByDeletedDateIsNull();
+    }
+    
+    
     public Profile findByProfileId(Long profileId) {
     	Optional<Profile> optional = profileRepository.findById(profileId);
 		return optional.orElse(null);
 	}
+    
+    public Profile saveOrUpdateProfile(Profile profile) {
+        return profileRepository.save(profile);
+    }
 
 }

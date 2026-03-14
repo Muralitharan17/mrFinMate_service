@@ -148,6 +148,39 @@ public class MasterConfigControllerService {
 
         return configValue;
     }
+    
+    public String getConfigAllValues(Long profileId, String month, String year, String configName) {
+    	
+    	
+		if (commonUtils.isNotNull(configName)) {
+			configName = configName.replaceAll("-", " ").toUpperCase();
+		}
+    	
+    	
+    	// Fetch using Section Type
+    	String configValue = fetchConfigValueUsingSectionType(profileId, month, year, configName);
+    	System.out.println("Config Value from Section Type: " + configValue);
+    	
+    	if(configValue == null) {
+    		Optional<MasterConfig> configOpt = masterConfigRepositoryService
+                    .findExisting(profileId, configName, month, year);
+
+            if (configOpt.isPresent()) {
+            	configValue = configOpt.get().getConfigValue();
+            }
+            
+            List<MasterConfig> globalOptList = masterConfigRepositoryService
+                    .findByProfileIdAndConfigName(profileId, configName);
+            
+    		if (globalOptList != null && !globalOptList.isEmpty()) {
+    			configValue = globalOptList.get(0).getConfigValue();
+    		}
+    	}
+    	
+        
+
+        return configValue;
+    }
 
 	private String fetchConfigValueUsingSectionType(Long profileId, String month, String year, String configName) {
 		String financeTypes = "";

@@ -102,5 +102,7 @@ public class BudgetConfig {
     public void preUpdate() {
         updatedDate = LocalDateTime.now();
     }
+    
+    
 }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.murali.mrFinMate.dto.ExpenseFilterRequestDTO;
 import com.murali.mrFinMate.entity.ExpenseTracker;
 import com.murali.mrFinMate.service.ExpenseTrackerControllerService;
 
@@ -28,13 +29,15 @@ public class ExpenseTrackerController {
     public ResponseEntity<List<ExpenseTracker>> getExpenses(
             @RequestParam Long profileId,
             @RequestParam String month,
-            @RequestParam String year) {
-        return ResponseEntity.ok(expenseTrackerControllerService.getExpenses(profileId, month, year));
+            @RequestParam String year,
+            @RequestParam(required = false) boolean onlyExpenses
+            ) {
+        return ResponseEntity.ok(expenseTrackerControllerService.getExpenses(profileId, month, year,onlyExpenses));
     }
 
     @PostMapping("/expenses")
-    public ResponseEntity<ExpenseTracker> createExpense(@RequestBody ExpenseTracker expense) {
-    	ExpenseTracker saved = expenseTrackerControllerService.saveExpense(expense);
+    public ResponseEntity<ExpenseTracker> saveOrUpdateExpense(@RequestBody ExpenseTracker expense) {
+    	ExpenseTracker saved = expenseTrackerControllerService.saveOrUpdateExpense(expense);
         return ResponseEntity.ok(saved);
     }
 
@@ -49,4 +52,10 @@ public class ExpenseTrackerController {
     	expenseTrackerControllerService.deleteExpense(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @PostMapping("expenses/filter")
+	public ResponseEntity<List<ExpenseTracker>> filterExpenses(@RequestBody ExpenseFilterRequestDTO expenseFilterRequestDTO) {
+		List<ExpenseTracker> filteredExpenses = expenseTrackerControllerService.filterExpenses(expenseFilterRequestDTO);
+		return ResponseEntity.ok(filteredExpenses);
+	}
 }

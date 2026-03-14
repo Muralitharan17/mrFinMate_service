@@ -24,8 +24,19 @@ public class FinanceTypeConstoller {
 	FinanceTypeControllerService financeTypeControllerService;
 	
 	@GetMapping("/fetchFinanceTypeConfig")
-    public ResponseEntity<List<FinanceTypeDTO>> getFinanceTypeDetailsBySectionId(@RequestParam Long sectionId) {
-        List<FinanceTypeDTO> response = financeTypeControllerService.getFinanceTypeDetailsBySectionId(sectionId);
+    public ResponseEntity<List<FinanceTypeDTO>> getFinanceTypeDetailsBySectionId(@RequestParam(required = false) Long sectionId,
+    		@RequestParam(required = false) String sectionName,
+    		@RequestParam(required = false) Long profileId,
+    		@RequestParam(required = false) String month, @RequestParam(required = false) String year) {
+		
+		List<FinanceTypeDTO> response = null;
+				
+		if(sectionId != null && sectionId >0) {
+			 response = financeTypeControllerService.getFinanceTypeDetailsBySectionId(sectionId);
+		} else {
+			response = financeTypeControllerService.getFinanceTypeDetailsByGivenMonthAndYear(sectionName, profileId, month, year);
+		}
+       
         return ResponseEntity.ok(response);
     }
 

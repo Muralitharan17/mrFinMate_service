@@ -60,6 +60,9 @@ public class ExpenseTracker {
 
     @Column(name = "BALANCE", nullable = false)
     private BigDecimal balance = BigDecimal.ZERO;
+    
+    @Column(name = "REMARK")
+    private String remark;
 
     @Column(name = "CREATED_USER")
     private String createdUser;

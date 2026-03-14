@@ -31,5 +31,17 @@ public class BudgetConfigDTO {
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
     private List<BudgetSectionDTO> sections;
+    
+	public BudgetConfigDTO(Long profileId, String month, String year, BigDecimal actualSalary, BigDecimal spentSalary, BigDecimal balanceSalary,
+			BigDecimal budgetSalary, BigDecimal budgetPercentage) {
+		this.profileId = profileId;
+		this.month = month;
+		this.year = year;
+		this.actualSalary = actualSalary;
+		this.spentSalary = spentSalary;
+		this.balanceSalary = balanceSalary;
+		this.budgetSalary = budgetSalary;
+		this.budgetPercentage = budgetPercentage;
+	}
 }
 

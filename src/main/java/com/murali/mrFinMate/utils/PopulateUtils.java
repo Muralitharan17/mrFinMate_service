@@ -33,6 +33,8 @@ public class PopulateUtils {
 				budgetSection.setSectionName(budgetSectionDTO.getName());
 				budgetSection.setSectionPercentage(budgetSectionDTO.getPercentage());
 				budgetSection.setAllottedAmount(budgetSectionDTO.getAllocatedAmount());
+				budgetSection.setSpentAmount(budgetSectionDTO.getSpentAmount());
+				budgetSection.setBalanceAmount(budgetSectionDTO.getBalanceAmount());
 			}
 			
 		} catch (Exception e) {
@@ -70,6 +72,10 @@ public class PopulateUtils {
 
 				profileDTO.setId(profile.getId());
 				profileDTO.setName(profile.getName());
+				profileDTO.setIsManager(profile.getIsManager());
+				profileDTO.setCreatedUser(profile.getCreatedUser());
+				profileDTO.setCreatedDate(profile.getCreatedDate());
+				profileDTO.setUpdatedDate(profile.getUpdatedDate());
 				
 				
 				if (profile.getBudgetConfigs() != null && !profile.getBudgetConfigs().isEmpty()) {
@@ -139,6 +145,8 @@ public class PopulateUtils {
 				budgetSection.setSectionName(budgetSectionDTO.getName());
 				budgetSection.setSectionPercentage(budgetSectionDTO.getPercentage());
 				budgetSection.setAllottedAmount(budgetSectionDTO.getAllocatedAmount());
+				budgetSection.setSpentAmount(budgetSectionDTO.getSpentAmount());
+				budgetSection.setBalanceAmount(budgetSectionDTO.getBalanceAmount());
 			}
 			
 		} catch (Exception e) {

@@ -53,10 +53,10 @@ public class FinanceCategory {
     private BigDecimal allottedAmount;
     
     @Column(name = "SPENT_AMOUNT", precision = 12, scale = 2)
-    private BigDecimal spentAmount;
+    private BigDecimal spentAmount = BigDecimal.ZERO;
 
     @Column(name = "BALANCE_AMOUNT", precision = 12, scale = 2, insertable = false, updatable = false)
-    private BigDecimal balanceAmount;
+    private BigDecimal balanceAmount = BigDecimal.ZERO;
     
     @Column(name = "REMARKS", length = 255)
     private String remarks;
